@@ -1,0 +1,939 @@
+<title>Component Index</title>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EFEAE0;
+    --surface: #FFFFFF;
+    --surface-2: #E6DFCF;
+    --ink: #201C16;
+    --ink-soft: #6B6152;
+    --accent: #1F6F78;
+    --accent-strong: #14535A;
+    --accent-ink: #F4FBFB;
+    --warn: #B5451D;
+    --warn-bg: #F5DFCF;
+    --rule: #D9D0BC;
+    --shadow: rgba(32,28,22,0.10);
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15130F;
+      --surface: #1E1B15;
+      --surface-2: #272219;
+      --ink: #EDE8DC;
+      --ink-soft: #A79C86;
+      --accent: #55BEC6;
+      --accent-strong: #7FD3D9;
+      --accent-ink: #0B2224;
+      --warn: #E2794A;
+      --warn-bg: #3A2216;
+      --rule: #3A3527;
+      --shadow: rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15130F;
+    --surface: #1E1B15;
+    --surface-2: #272219;
+    --ink: #EDE8DC;
+    --ink-soft: #A79C86;
+    --accent: #55BEC6;
+    --accent-strong: #7FD3D9;
+    --accent-ink: #0B2224;
+    --warn: #E2794A;
+    --warn-bg: #3A2216;
+    --rule: #3A3527;
+    --shadow: rgba(0,0,0,0.45);
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-body); }
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+
+  .app { display: flex; min-height: 100%; }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    width: 260px; flex: none; padding: 20px 16px 24px;
+    border-right: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .brand { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
+  .brand .name { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: 0.02em; line-height: 1; }
+  .brand .meta { font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  .facet-group { display: flex; flex-direction: column; gap: 8px; }
+  .facet-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .facet-title {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; font-size: 13px; color: var(--ink-soft);
+  }
+  .facet-count {
+    display: inline-block; margin-left: 6px; font-family: var(--font-mono); font-weight: 700;
+    letter-spacing: 0; text-transform: none; font-size: 11px; color: var(--accent-ink);
+    background: var(--accent); border-radius: 9px; padding: 1px 7px; vertical-align: 1px;
+  }
+  .facet-actions { display: flex; align-items: center; gap: 10px; }
+  .facet-link-btn {
+    font-family: var(--font-body); font-size: 11.5px; color: var(--accent-strong);
+    background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline;
+    text-underline-offset: 2px; white-space: nowrap;
+  }
+  .search-box {
+    width: 100%; padding: 9px 11px; border-radius: 7px; border: 1px solid var(--rule);
+    background: var(--surface); color: var(--ink); font-family: var(--font-body); font-size: 14px;
+  }
+  .search-box:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .chip-list { display: flex; flex-direction: column; gap: 2px; max-height: 220px; overflow-y: auto; }
+  .chip-list.expanded { max-height: none; overflow-y: visible; }
+  .chip {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 13.5px;
+    border: 1px solid transparent; user-select: none;
+  }
+  .chip:hover { background: var(--surface-2); }
+  .chip.active { background: var(--accent); color: var(--accent-ink); }
+  .chip.active .chip-count { color: var(--accent-ink); opacity: 0.75; }
+  .chip-count { font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  .param-ranges { display: flex; flex-direction: column; gap: 8px; }
+  .param-range-row {
+    background: var(--surface-2); border-radius: 7px; padding: 7px 9px;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .param-range-label { font-size: 12.5px; font-weight: 600; }
+  .param-range-inputs { display: flex; align-items: center; gap: 6px; }
+  .param-range-inputs input {
+    width: 0; flex: 1; padding: 5px 7px; border-radius: 5px; border: 1px solid var(--rule);
+    background: var(--surface); color: var(--ink); font-family: var(--font-mono); font-size: 12.5px;
+  }
+  .param-range-inputs input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .param-range-inputs span { font-size: 11px; color: var(--ink-soft); }
+
+  .toggle-row {
+    display: flex; align-items: center; gap: 8px; font-size: 13.5px; cursor: pointer;
+    padding: 6px 2px;
+  }
+  .toggle-row input { accent-color: var(--accent); width: 15px; height: 15px; }
+
+  .clear-btn {
+    font-family: var(--font-body); font-size: 12.5px; color: var(--accent-strong);
+    background: none; border: none; cursor: pointer; text-align: left; padding: 2px 0;
+    text-decoration: underline; text-underline-offset: 2px;
+  }
+
+  /* ---------- Main ---------- */
+  .main { flex: 1; min-width: 0; padding: 20px 24px 40px; }
+  .toolbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .result-count { font-family: var(--font-mono); font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .toolbar-right { display: flex; align-items: center; gap: 8px; }
+  .sort-select {
+    padding: 7px 10px; border-radius: 7px; border: 1px solid var(--rule);
+    background: var(--surface); color: var(--ink); font-family: var(--font-body); font-size: 13px;
+  }
+  .view-toggle {
+    padding: 7px 12px; border-radius: 7px; border: 1px solid var(--rule);
+    background: var(--surface); color: var(--ink); font-family: var(--font-body); font-size: 13px;
+    cursor: pointer; white-space: nowrap;
+  }
+  .view-toggle.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px;
+  }
+  .grid.list-view { display: block; }
+  .list-table-wrap {
+    overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface);
+  }
+  .list-table {
+    border-collapse: separate; border-spacing: 0; table-layout: fixed; width: auto;
+    --flag-w: 22px; --company-w: 190px; --name-w: 230px; --cat-w: 170px;
+  }
+  .list-table th, .list-table td {
+    padding: 8px 12px; font-size: 12.5px; white-space: nowrap; text-align: left;
+    border-bottom: 1px solid var(--rule); overflow: hidden; text-overflow: ellipsis;
+  }
+  .list-table thead th {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; font-size: 11px; color: var(--ink-soft); background: var(--surface-2);
+  }
+  .list-table tbody tr { cursor: pointer; }
+  .list-table tbody tr:hover td { background: var(--surface-2); }
+  .list-table td.spec-cell, .list-table th.spec-th { font-family: var(--font-mono); color: var(--ink-soft); width: 150px; }
+  .list-table th.spec-th { font-family: var(--font-display); color: var(--ink-soft); }
+  .list-table .col-flag { width: var(--flag-w); text-align: center; }
+  .list-table .col-company { width: var(--company-w); text-transform: uppercase; letter-spacing: 0.03em; font-size: 11.5px; color: var(--ink-soft); position: relative; }
+  .list-table .col-name { width: var(--name-w); font-weight: 600; position: relative; }
+  .list-table .col-cat { width: var(--cat-w); font-size: 11px; }
+  .list-table td.freeze, .list-table th.freeze {
+    position: sticky; background: var(--surface); z-index: 1;
+  }
+  .list-table thead th.freeze { background: var(--surface-2); z-index: 2; }
+  .list-table tbody tr:hover td.freeze { background: var(--surface-2); }
+  .freeze-flag { left: 0; }
+  .freeze-company { left: var(--flag-w); }
+  .freeze-name { left: calc(var(--flag-w) + var(--company-w)); }
+  .freeze-cat { left: calc(var(--flag-w) + var(--company-w) + var(--name-w)); box-shadow: 2px 0 4px var(--shadow); }
+  .list-table .review-dot { position: static; box-shadow: none; margin: 0 auto; }
+  .col-resize-handle {
+    position: absolute; top: 0; right: -3px; width: 6px; height: 100%; cursor: col-resize;
+    user-select: none; touch-action: none; z-index: 3;
+  }
+  .col-resize-handle:hover, .col-resize-handle.dragging { background: var(--accent); opacity: 0.6; }
+  .list-table th.sortable { cursor: pointer; }
+  .list-table th.sortable:hover .th-label { color: var(--accent-strong); }
+  .list-table th .th-label { pointer-events: none; }
+  .sort-arrow { font-size: 9px; color: var(--accent-strong); }
+  .list-table td.sorted-col { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
+  .list-table thead th.sorted-col { background: color-mix(in srgb, var(--accent) 22%, var(--surface-2)); }
+  .list-table td.freeze.sorted-col, .list-table th.freeze.sorted-col { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
+  .list-table thead th.freeze.sorted-col { background: color-mix(in srgb, var(--accent) 22%, var(--surface-2)); }
+  .list-table tbody tr:hover td.sorted-col { background: color-mix(in srgb, var(--accent) 20%, var(--surface-2)); }
+  .card {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 10px;
+    overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--shadow); }
+  .card-thumb { position: relative; aspect-ratio: 4/3; background: var(--surface-2); overflow: hidden; }
+  .card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .review-dot {
+    position: absolute; top: 8px; right: 8px; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--warn); box-shadow: 0 0 0 2px var(--surface);
+  }
+  .card-cat {
+    position: absolute; bottom: 8px; left: 8px; font-family: var(--font-display); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em; font-size: 11.5px;
+    background: var(--surface); color: var(--ink); padding: 2px 8px; border-radius: 5px;
+    box-shadow: 0 1px 4px var(--shadow);
+  }
+  .card-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 3px; flex: 1; }
+  .card-company { font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+  .card-name { font-size: 14.5px; font-weight: 600; line-height: 1.25; }
+  .card-specs { margin-top: 4px; display: flex; flex-direction: column; gap: 1px; }
+  .card-spec { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-spec b { color: var(--ink); font-weight: 500; }
+
+  .empty-state { padding: 60px 20px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+  .list-note {
+    font-size: 12.5px; color: var(--ink-soft); background: var(--surface-2); border: 1px solid var(--rule);
+    border-radius: 7px; padding: 7px 11px; margin-bottom: 10px;
+  }
+
+  /* ---------- Modal ---------- */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(20,17,12,0.55); backdrop-filter: blur(2px);
+    display: flex; align-items: flex-start; justify-content: center; padding: 32px 16px;
+    overflow-y: auto; z-index: 50;
+  }
+  .modal {
+    background: var(--surface); border-radius: 12px; max-width: 920px; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0; overflow: hidden;
+    box-shadow: 0 20px 60px var(--shadow);
+  }
+  .modal-img { background: var(--surface-2); }
+  .modal-img { display: flex; flex-direction: column; }
+  .modal-img img { width: 100%; height: 100%; object-fit: contain; display: block; max-height: 560px; }
+  .modal-img-main { flex: 1; min-height: 0; }
+  .modal-img-extra { display: flex; gap: 6px; padding: 6px; background: var(--surface); overflow-x: auto; }
+  .modal-img-extra img {
+    height: 64px; width: auto; max-height: 64px; border-radius: 5px; cursor: pointer;
+    border: 2px solid transparent; flex: none;
+  }
+  .modal-img-extra img.active { border-color: var(--accent); }
+  .modal-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; max-height: 560px; }
+  .modal-close {
+    position: absolute; top: 12px; right: 12px; background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 16px; color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  .modal-title { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.05; text-wrap: balance; }
+  .modal-badge {
+    display: inline-block; width: fit-content; font-family: var(--font-display); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em; font-size: 12px; background: var(--accent);
+    color: var(--accent-ink); padding: 3px 10px; border-radius: 5px;
+  }
+  .modal-desc { font-size: 14px; line-height: 1.5; color: var(--ink); }
+  .review-banner {
+    background: var(--warn-bg); border: 1px solid var(--warn); color: var(--warn);
+    border-radius: 8px; padding: 8px 12px; font-size: 13px; line-height: 1.4;
+  }
+  .spec-table { display: grid; grid-template-columns: auto 1fr; gap: 5px 14px; font-size: 13px; }
+  .spec-key { color: var(--ink-soft); font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .spec-val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .variant-table-wrap { margin-top: 8px; overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; }
+  .variant-table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+  .variant-table th, .variant-table td { padding: 6px 10px; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+  .variant-table thead th {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+    font-size: 11px; color: var(--ink-soft); background: var(--surface-2); border-bottom: 1px solid var(--rule);
+  }
+  .variant-table td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .variant-table td.variant-row-label {
+    font-family: var(--font-body); color: var(--ink-soft); font-size: 12px; position: sticky; left: 0;
+    background: var(--surface); box-shadow: 1px 0 3px var(--shadow);
+  }
+  .variant-table tbody tr:nth-child(even) td:not(.variant-row-label) { background: var(--surface-2); }
+  .variant-cell-empty { color: var(--rule); }
+  .section-label {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.07em; font-size: 12.5px; color: var(--ink-soft); border-top: 1px solid var(--rule);
+    padding-top: 12px;
+  }
+  details.zh summary { cursor: pointer; font-size: 13px; color: var(--accent-strong); }
+  details.zh .zh-text { font-size: 13px; line-height: 1.6; margin-top: 6px; white-space: pre-wrap; }
+  .source-note { font-size: 12px; color: var(--ink-soft); font-family: var(--font-mono); }
+
+  @media (max-width: 860px) {
+    .app { flex-direction: column; }
+    .sidebar {
+      width: 100%; border-right: none; border-bottom: 1px solid var(--rule);
+      flex-direction: row; flex-wrap: wrap; align-items: center; padding: 14px 16px;
+    }
+    .brand { flex: 1 1 100%; }
+    .facet-group { flex: 1 1 auto; }
+    .chip-list { max-height: 140px; }
+    .main { padding: 16px; }
+    .modal { grid-template-columns: 1fr; }
+    .modal-img img, .modal-body { max-height: none; }
+  }
+</style>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="name">Component Index</div>
+      <div class="meta" id="brand-meta">— entries</div>
+    </div>
+
+    <div class="facet-group">
+      <button class="clear-btn" id="clear-filters">Clear all filters</button>
+    </div>
+
+    <div class="facet-group">
+      <div class="facet-title">Search</div>
+      <input class="search-box" id="search" type="text" placeholder="Product, spec, description…">
+    </div>
+
+    <div class="facet-group">
+      <div class="facet-header">
+        <div class="facet-title">Category<span class="facet-count" id="category-count" hidden></span></div>
+        <div class="facet-actions">
+          <button class="facet-link-btn" data-action="clear-category">Clear</button>
+          <button class="facet-link-btn" data-list="category-list">Expand</button>
+        </div>
+      </div>
+      <div class="chip-list" id="category-list"></div>
+    </div>
+
+    <div class="facet-group">
+      <div class="facet-header">
+        <div class="facet-title">Parameters<span class="facet-count" id="parameters-count" hidden></span></div>
+        <div class="facet-actions">
+          <button class="facet-link-btn" data-action="clear-parameters">Clear</button>
+          <button class="facet-link-btn" data-list="param-list">Expand</button>
+        </div>
+      </div>
+      <input class="search-box" id="param-search" type="text" placeholder="Find a parameter…">
+      <div class="chip-list" id="param-list"></div>
+      <div class="param-ranges" id="param-ranges"></div>
+    </div>
+
+    <div class="facet-group">
+      <div class="facet-header">
+        <div class="facet-title">Company<span class="facet-count" id="company-count" hidden></span></div>
+        <div class="facet-actions">
+          <button class="facet-link-btn" data-action="clear-company">Clear</button>
+          <button class="facet-link-btn" data-list="company-list">Expand</button>
+        </div>
+      </div>
+      <div class="chip-list" id="company-list"></div>
+    </div>
+
+    <div class="facet-group">
+      <label class="toggle-row"><input type="checkbox" id="review-toggle"> Show review flags<span class="facet-count" id="review-count" hidden></span></label>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="toolbar">
+      <div class="result-count" id="result-count">— entries</div>
+      <div class="toolbar-right">
+        <button class="view-toggle active" id="view-toggle">▦ Grid view</button>
+        <select class="sort-select" id="sort-select">
+          <option value="company">Sort: Company</option>
+          <option value="name">Sort: Product name</option>
+          <option value="category">Sort: Category</option>
+        </select>
+      </div>
+    </div>
+    <div class="list-note" id="list-note" hidden></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty-state" id="empty-state" hidden>No components match these filters.</div>
+  </main>
+</div>
+
+<script>
+(async function () {
+  const state = {
+    categories: new Set(), companies: new Set(), parameters: {}, showReviewFlags: false,
+    search: '', paramSearch: '', sort: 'company', viewMode: 'list',
+    expanded: { 'category-list': false, 'param-list': false, 'company-list': false },
+    colWidths: { company: 190, name: 230 },
+    listSort: { key: null, dir: 'asc' },
+  };
+  let DATA = [];
+
+  const el = (sel) => document.querySelector(sel);
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  // known parameters get an explicit unit-labeled display name (units were
+  // normalized in build_db.py / spec_units.py); anything else falls back to
+  // a plain title-cased version of its raw key.
+  const PARAM_LABELS = {
+    weight: 'Weight (g)',
+    rated_torque: 'Rated Torque (N·m)',
+    peak_torque: 'Peak Torque (N·m)',
+    rated_power: 'Rated Power (W)',
+    rated_voltage: 'Rated Voltage (V)',
+    supply_voltage: 'Supply Voltage (V)',
+    voltage: 'Voltage (V)',
+    rated_current: 'Rated Current (A)',
+    max_speed_rpm: 'Max Speed (RPM)',
+    max_speed_linear: 'Max Speed (mm/s)',
+    rated_speed_rpm: 'Rated Speed (RPM)',
+    rated_speed_linear: 'Rated Speed (mm/s)',
+    repeatability_mm: 'Repeatability (mm)',
+    repeatability_deg: 'Repeatability (deg)',
+    repeatability_pct_fs: 'Repeatability (%F.S)',
+    capacity_kg: 'Capacity (kg)',
+    capacity_n: 'Capacity (N)',
+    capacity_kpa: 'Capacity (kPa)',
+    capacity_nm: 'Capacity (N·m)',
+    capacity_mm: 'Capacity (mm)',
+    rated_output_mv_v: 'Rated Output (mV/V)',
+    rated_output_w: 'Rated Output (W)',
+  };
+  const titleCaseKey = (k) => PARAM_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const parseNumeric = (v) => { const m = String(v).match(/-?\d+\.?\d*/); return m ? parseFloat(m[0]) : null; };
+
+  try {
+    const res = await fetch('data.json', { cache: 'no-store' });
+    DATA = await res.json();
+  } catch (e) {
+    el('#grid').innerHTML = '<div class="empty-state">Could not load component data.</div>';
+    return;
+  }
+
+  const catCounts = {}, companyCounts = {}, paramCounts = {};
+  DATA.forEach((d) => {
+    catCounts[d.category] = (catCounts[d.category] || 0) + 1;
+    companyCounts[d.company] = (companyCounts[d.company] || 0) + 1;
+    Object.keys(d.specs || {}).forEach((k) => { paramCounts[k] = (paramCounts[k] || 0) + 1; });
+  });
+  const categories = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
+  const companies = Object.keys(companyCounts).sort((a, b) => companyCounts[b] - companyCounts[a]);
+  const parameters = Object.keys(paramCounts).sort((a, b) => paramCounts[b] - paramCounts[a]);
+
+  el('#brand-meta').textContent = `${DATA.length} entries`;
+  const reviewCountEl = el('#review-count');
+  const flaggedCount = DATA.filter((d) => d.needs_review).length;
+  reviewCountEl.textContent = flaggedCount;
+  reviewCountEl.hidden = flaggedCount === 0;
+
+  function renderChipList(container, items, counts, isActiveFn, labelFn) {
+    labelFn = labelFn || ((x) => x);
+    container.innerHTML = items.map((name) => `
+      <div class="chip ${isActiveFn(name) ? 'active' : ''}" data-value="${escapeHtml(name)}">
+        <span>${escapeHtml(labelFn(name))}</span><span class="chip-count">${counts[name] || 0}</span>
+      </div>
+    `).join('');
+    container.classList.toggle('expanded', !!state.expanded[container.id]);
+  }
+
+  function renderParamRanges() {
+    const keys = Object.keys(state.parameters);
+    el('#param-ranges').innerHTML = keys.map((k) => `
+      <div class="param-range-row" data-key="${escapeHtml(k)}">
+        <div class="param-range-label">${escapeHtml(titleCaseKey(k))}</div>
+        <div class="param-range-inputs">
+          <input type="number" class="param-min" placeholder="Min" value="${escapeHtml(state.parameters[k].min)}">
+          <span>–</span>
+          <input type="number" class="param-max" placeholder="Max" value="${escapeHtml(state.parameters[k].max)}">
+        </div>
+      </div>
+    `).join('');
+    el('#param-ranges').querySelectorAll('.param-range-row').forEach((row) => {
+      const key = row.dataset.key;
+      row.querySelector('.param-min').addEventListener('input', (e) => {
+        state.parameters[key].min = e.target.value; renderGrid();
+      });
+      row.querySelector('.param-max').addEventListener('input', (e) => {
+        state.parameters[key].max = e.target.value; renderGrid();
+      });
+    });
+  }
+
+  function setFacetCount(id, n) {
+    const el_ = el('#' + id);
+    el_.textContent = n;
+    el_.hidden = n === 0;
+  }
+
+  // entries matching every active filter EXCEPT the parameter selections
+  // themselves -- used to scope the Parameters facet to "what actually
+  // exists on the items you've already narrowed to" (e.g. picking a
+  // Category first only offers parameters that category's items have).
+  function paramScopedData() {
+    return DATA.filter((d) => {
+      if (state.categories.size && !state.categories.has(d.category)) return false;
+      if (state.companies.size && !state.companies.has(d.company)) return false;
+      if (state.search) {
+        const s = state.search.toLowerCase();
+        const hay = (d.product_name + ' ' + d.description + ' ' + d.subcategory + ' ' + JSON.stringify(d.specs)).toLowerCase();
+        if (!hay.includes(s)) return false;
+      }
+      return true;
+    });
+  }
+
+  function renderFacets() {
+    renderChipList(el('#category-list'), categories, catCounts, (n) => state.categories.has(n));
+
+    const scoped = paramScopedData();
+    const scopedCounts = {};
+    scoped.forEach((d) => Object.keys(d.specs || {}).forEach((k) => { scopedCounts[k] = (scopedCounts[k] || 0) + 1; }));
+    const scoping = state.categories.size || state.companies.size || state.search;
+    // parameters actually present in scope, most-common first; already-
+    // selected parameters stay visible (with a 0 count) even if narrowing
+    // the other facets made them no longer apply, so they can still be
+    // seen and cleared rather than silently vanishing.
+    let paramPool = scoping ? parameters.filter((k) => k in scopedCounts) : parameters.slice();
+    Object.keys(state.parameters).forEach((k) => { if (!paramPool.includes(k)) paramPool.push(k); });
+    if (scoping) paramPool.sort((a, b) => (scopedCounts[b] || 0) - (scopedCounts[a] || 0));
+    const paramFilter = state.paramSearch.toLowerCase();
+    const visibleParams = paramFilter
+      ? paramPool.filter((k) => titleCaseKey(k).toLowerCase().includes(paramFilter))
+      : paramPool;
+    const displayCounts = scoping ? scopedCounts : paramCounts;
+    renderChipList(el('#param-list'), visibleParams, displayCounts, (k) => k in state.parameters, titleCaseKey);
+    renderChipList(el('#company-list'), companies, companyCounts, (n) => state.companies.has(n));
+    renderParamRanges();
+    setFacetCount('category-count', state.categories.size);
+    setFacetCount('parameters-count', Object.keys(state.parameters).length);
+    setFacetCount('company-count', state.companies.size);
+  }
+
+  function matches(d) {
+    if (state.categories.size && !state.categories.has(d.category)) return false;
+    if (state.companies.size && !state.companies.has(d.company)) return false;
+    for (const [key, range] of Object.entries(state.parameters)) {
+      const specs = d.specs || {};
+      if (!(key in specs)) return false;
+      if (range.min !== '' || range.max !== '') {
+        const val = parseNumeric(specs[key]);
+        if (val === null) return false;
+        if (range.min !== '' && val < parseFloat(range.min)) return false;
+        if (range.max !== '' && val > parseFloat(range.max)) return false;
+      }
+    }
+    if (state.search) {
+      const s = state.search.toLowerCase();
+      const hay = (d.product_name + ' ' + d.description + ' ' + d.subcategory + ' ' + JSON.stringify(d.specs)).toLowerCase();
+      if (!hay.includes(s)) return false;
+    }
+    return true;
+  }
+
+  function listSortValue(d, key) {
+    if (key === 'company') return d.company;
+    if (key === 'name') return d.product_name;
+    if (key === 'category') return d.category;
+    const specs = d.specs || {};
+    return key in specs ? specs[key] : null;
+  }
+
+  function compareListSort(a, b, key, dir) {
+    const av = listSortValue(a, key), bv = listSortValue(b, key);
+    const aMissing = av === null || av === undefined || av === '';
+    const bMissing = bv === null || bv === undefined || bv === '';
+    if (aMissing && bMissing) return 0;
+    if (aMissing) return 1;
+    if (bMissing) return -1;
+    const aNum = parseNumeric(av), bNum = parseNumeric(bv);
+    const cmp = (aNum !== null && bNum !== null) ? aNum - bNum : String(av).localeCompare(String(bv));
+    return dir === 'asc' ? cmp : -cmp;
+  }
+
+  function sortData(list) {
+    const sorted = [...list];
+    if (state.viewMode === 'list' && state.listSort.key) {
+      sorted.sort((a, b) => compareListSort(a, b, state.listSort.key, state.listSort.dir));
+      return sorted;
+    }
+    if (state.sort === 'company') sorted.sort((a, b) => a.company.localeCompare(b.company) || a.product_name.localeCompare(b.product_name));
+    else if (state.sort === 'name') sorted.sort((a, b) => a.product_name.localeCompare(b.product_name));
+    else if (state.sort === 'category') sorted.sort((a, b) => a.category.localeCompare(b.category) || a.company.localeCompare(b.company));
+    return sorted;
+  }
+
+  function specPreview(specs) {
+    const entries = Object.entries(specs || {}).slice(0, 3);
+    return entries.map(([k, v]) => `<div class="card-spec"><b>${escapeHtml(titleCaseKey(k))}:</b> ${escapeHtml(v)}</div>`).join('');
+  }
+
+  function activeFilterSummary() {
+    const parts = [];
+    if (state.categories.size) parts.push(`Category: ${[...state.categories].join(', ')}`);
+    if (state.companies.size) parts.push(`Company: ${[...state.companies].join(', ')}`);
+    const paramKeys = Object.keys(state.parameters);
+    if (paramKeys.length) {
+      parts.push(`Parameters: ${paramKeys.map((k) => {
+        const r = state.parameters[k];
+        const range = (r.min !== '' || r.max !== '') ? ` (${r.min || '–'}–${r.max || '–'})` : '';
+        return titleCaseKey(k) + range;
+      }).join(', ')}`);
+    }
+    if (state.search) parts.push(`Search: "${state.search}"`);
+    return parts;
+  }
+
+  function renderGrid() {
+    const filtered = sortData(DATA.filter(matches));
+    el('#result-count').textContent = `${filtered.length} of ${DATA.length} entries`;
+    if (filtered.length === 0) {
+      const parts = activeFilterSummary();
+      el('#empty-state').innerHTML = parts.length
+        ? `No components match:<br><b>${parts.map(escapeHtml).join(' &middot; ')}</b><br><br>These filters combine (AND) across every panel &mdash; a leftover selection elsewhere is often the cause. <button class="clear-btn" id="empty-clear-filters" style="margin:8px auto 0;">Clear all filters</button>`
+        : 'No components match these filters.';
+      el('#empty-state').hidden = false;
+      const clearBtn = el('#empty-clear-filters');
+      if (clearBtn) clearBtn.addEventListener('click', () => el('#clear-filters').click());
+    } else {
+      el('#empty-state').hidden = true;
+    }
+    const grid = el('#grid');
+    grid.classList.toggle('list-view', state.viewMode === 'list');
+
+    if (state.viewMode === 'list') {
+      // one column per spec key actually present among the currently
+      // filtered rows, ordered by overall frequency so the most common
+      // parameters land near the frozen columns.
+      const colKeys = new Set();
+      filtered.forEach((d) => Object.keys(d.specs || {}).forEach((k) => colKeys.add(k)));
+      const colsAll = parameters.filter((k) => colKeys.has(k));
+      const selectedParamKeys = Object.keys(state.parameters);
+      // rendering every present spec column is prohibitively slow once rows*cols
+      // gets large (1000+ cols x 800+ rows -> 1M+ cells, multi-second reflow), so
+      // when the user hasn't explicitly picked parameters, cap how many auto-show,
+      // scaled to the current row count so narrower views still reveal more.
+      const MAX_CELLS = 25000;
+      let cols, truncated = false;
+      if (selectedParamKeys.length) {
+        cols = colsAll.filter((k) => selectedParamKeys.includes(k));
+      } else {
+        const cap = Math.max(8, Math.floor(MAX_CELLS / Math.max(filtered.length, 1)));
+        cols = colsAll.slice(0, cap);
+        truncated = colsAll.length > cols.length;
+      }
+      el('#list-note').textContent = truncated
+        ? `Showing top ${cols.length} of ${colsAll.length} parameters by frequency — narrow by category/search or select parameters to see more.`
+        : '';
+      el('#list-note').hidden = !truncated;
+      const SPEC_COL_W = 150;
+      const totalTableWidth = 22 + state.colWidths.company + state.colWidths.name + 170 + cols.length * SPEC_COL_W;
+
+      const colgroup = `
+        <colgroup>
+          <col style="width:22px">
+          <col class="col-company" style="width:${state.colWidths.company}px">
+          <col class="col-name" style="width:${state.colWidths.name}px">
+          <col style="width:170px">
+          ${cols.map(() => '<col style="width:150px">').join('')}
+        </colgroup>`;
+      const sortInd = (key) => state.listSort.key === key ? (state.listSort.dir === 'asc' ? ' <span class="sort-arrow">&#9650;</span>' : ' <span class="sort-arrow">&#9660;</span>') : '';
+      const sortedCls = (key) => state.listSort.key === key ? ' sorted-col' : '';
+      const header = `
+        <tr>
+          <th class="freeze freeze-flag col-flag"></th>
+          <th class="freeze freeze-company col-company sortable${sortedCls('company')}" data-sort-key="company"><span class="th-label">Company${sortInd('company')}</span><div class="col-resize-handle" data-col="company"></div></th>
+          <th class="freeze freeze-name col-name sortable${sortedCls('name')}" data-sort-key="name"><span class="th-label">Product${sortInd('name')}</span><div class="col-resize-handle" data-col="name"></div></th>
+          <th class="freeze freeze-cat col-cat sortable${sortedCls('category')}" data-sort-key="category"><span class="th-label">Category${sortInd('category')}</span></th>
+          ${cols.map((k) => `<th class="spec-th sortable${sortedCls(k)}" data-sort-key="${escapeHtml(k)}"><span class="th-label">${escapeHtml(titleCaseKey(k))}${sortInd(k)}</span></th>`).join('')}
+        </tr>`;
+      const rows = filtered.map((d) => `
+        <tr data-id="${d.id}">
+          <td class="freeze freeze-flag col-flag">${(d.needs_review && state.showReviewFlags) ? '<div class="review-dot" title="Needs review"></div>' : ''}</td>
+          <td class="freeze freeze-company col-company${sortedCls('company')}" title="${escapeHtml(d.company)}">${escapeHtml(d.company)}</td>
+          <td class="freeze freeze-name col-name${sortedCls('name')}" title="${escapeHtml(d.product_name)}">${escapeHtml(d.product_name)}</td>
+          <td class="freeze freeze-cat col-cat${sortedCls('category')}" title="${escapeHtml(d.category)}">${escapeHtml(d.category)}</td>
+          ${cols.map((k) => `<td class="spec-cell${sortedCls(k)}" title="${d.specs && k in d.specs ? escapeHtml(d.specs[k]) : ''}">${d.specs && k in d.specs ? escapeHtml(d.specs[k]) : ''}</td>`).join('')}
+        </tr>
+      `).join('');
+
+      grid.innerHTML = `<div class="list-table-wrap"><table class="list-table" style="width:${totalTableWidth}px; --company-w:${state.colWidths.company}px; --name-w:${state.colWidths.name}px;">${colgroup}<thead>${header}</thead><tbody>${rows}</tbody></table></div>`;
+      grid.querySelectorAll('tbody tr').forEach((row) => {
+        row.addEventListener('click', () => openModal(Number(row.dataset.id)));
+      });
+      const tableEl = grid.querySelector('.list-table');
+      const colEls = { company: tableEl.querySelector('col.col-company'), name: tableEl.querySelector('col.col-name') };
+      grid.querySelectorAll('.col-resize-handle').forEach((handle) => {
+        handle.addEventListener('mousedown', (e) => {
+          e.preventDefault(); e.stopPropagation();
+          const col = handle.dataset.col;
+          const startX = e.clientX;
+          const startWidth = state.colWidths[col];
+          handle.classList.add('dragging');
+          const onMove = (ev) => {
+            const newWidth = Math.max(80, startWidth + (ev.clientX - startX));
+            const delta = newWidth - state.colWidths[col];
+            state.colWidths[col] = newWidth;
+            tableEl.style.setProperty(`--${col}-w`, newWidth + 'px');
+            colEls[col].style.width = newWidth + 'px';
+            tableEl.style.width = (parseFloat(tableEl.style.width) + delta) + 'px';
+          };
+          const onUp = () => {
+            handle.classList.remove('dragging');
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+          };
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+        handle.addEventListener('click', (e) => e.stopPropagation());
+      });
+      grid.querySelectorAll('.list-table thead th[data-sort-key]').forEach((th) => {
+        th.addEventListener('click', () => {
+          const key = th.dataset.sortKey;
+          if (state.listSort.key === key) {
+            state.listSort.dir = state.listSort.dir === 'asc' ? 'desc' : 'asc';
+          } else {
+            state.listSort.key = key;
+            state.listSort.dir = 'asc';
+          }
+          renderGrid();
+        });
+      });
+    } else {
+      el('#list-note').hidden = true;
+      grid.innerHTML = filtered.map((d) => `
+        <div class="card" data-id="${d.id}">
+          <div class="card-thumb">
+            <img src="${escapeHtml(d.thumb)}" loading="lazy" alt="${escapeHtml(d.product_name)}">
+            ${(d.needs_review && state.showReviewFlags) ? '<div class="review-dot" title="Needs review"></div>' : ''}
+            <div class="card-cat">${escapeHtml(d.category)}</div>
+          </div>
+          <div class="card-body">
+            <div class="card-company">${escapeHtml(d.company)}</div>
+            <div class="card-name">${escapeHtml(d.product_name)}</div>
+            <div class="card-specs">${specPreview(d.specs)}</div>
+          </div>
+        </div>
+      `).join('');
+      grid.querySelectorAll('.card').forEach((card) => {
+        card.addEventListener('click', () => openModal(Number(card.dataset.id)));
+      });
+    }
+  }
+
+  // some entries cover several winding/length/size variants of the same
+  // product in one brochure table (e.g. a motor sold as U1919 and U1934);
+  // the extraction keeps these as one spec key per row with a comma-joined
+  // value per variant (plus a "models" key naming the variants), which is
+  // hard to read as flat "key: v1, v2, v3" lines -- rebuild it as a proper
+  // variant-by-spec table instead, matching how the brochure itself lays
+  // it out, and keep any spec that's the same across all variants separate.
+  function buildVariantTable(specs) {
+    if (!specs || !specs.models) return null;
+    const variants = String(specs.models).split(',').map((s) => s.trim()).filter(Boolean);
+    if (variants.length < 2) return null;
+    const variantRows = [];
+    const sharedEntries = [];
+    Object.entries(specs).forEach(([k, v]) => {
+      if (k === 'models') return;
+      const parts = String(v).split(',').map((s) => s.trim());
+      if (parts.length === variants.length) variantRows.push([k, parts]);
+      else sharedEntries.push([k, v]);
+    });
+    if (!variantRows.length) return null;
+    return { variants, variantRows, sharedEntries };
+  }
+
+  // a different multi-variant shape: no separate "models" key, instead each
+  // spec value is its own semicolon-joined "SIZE: value; SIZE: value; ..."
+  // string (e.g. static_friction_torque_by_size = "SMB03: 0.04 Kgm (0.4 Nm);
+  // SMB04: 0.25 Kgm (2.5 Nm); ..."), and not every such spec necessarily
+  // covers the same sizes -- build the same kind of variant table from
+  // whichever sizes actually appear, leaving a blank cell where a given
+  // spec doesn't list that size.
+  function parseSizeMap(value) {
+    const chunks = String(value).split(/(?<![A-Za-z0-9])(?=[A-Za-z]{1,8}\d{1,4}[A-Za-z]?\s*:)/);
+    const map = {};
+    chunks.forEach((chunk) => {
+      const m = chunk.match(/^\s*([A-Za-z0-9\-]+)\s*:\s*(.+?)\s*;?\s*$/);
+      if (m) map[m[1]] = m[2].trim();
+    });
+    return Object.keys(map).length >= 2 ? map : null;
+  }
+
+  function naturalSizeSort(a, b) {
+    const na = parseFloat(String(a).replace(/[^\d.]/g, ''));
+    const nb = parseFloat(String(b).replace(/[^\d.]/g, ''));
+    if (!isNaN(na) && !isNaN(nb) && na !== nb) return na - nb;
+    return String(a).localeCompare(String(b));
+  }
+
+  function buildSizeMapTable(specs) {
+    if (!specs) return null;
+    const rows = [];
+    const sharedEntries = [];
+    const allSizes = new Set();
+    Object.entries(specs).forEach(([k, v]) => {
+      const map = parseSizeMap(v);
+      if (map) {
+        rows.push([k, map]);
+        Object.keys(map).forEach((s) => allSizes.add(s));
+      } else {
+        sharedEntries.push([k, v]);
+      }
+    });
+    if (!rows.length) return null;
+    const sizes = [...allSizes].sort(naturalSizeSort);
+    const variantRows = rows.map(([k, map]) => [k, sizes.map((s) => map[s] || '')]);
+    return { variants: sizes, variantRows, sharedEntries };
+  }
+
+  function openModal(id) {
+    const d = DATA.find((x) => x.id === id);
+    if (!d) return;
+    const variantData = buildVariantTable(d.specs) || buildSizeMapTable(d.specs);
+    const specsForFlatTable = variantData ? Object.fromEntries(variantData.sharedEntries) : (d.specs || {});
+    const specRows = Object.entries(specsForFlatTable).map(([k, v]) => `
+      <div class="spec-key">${escapeHtml(titleCaseKey(k))}</div><div class="spec-val">${escapeHtml(v)}</div>
+    `).join('');
+    const variantTableHtml = variantData ? `
+      <div class="variant-table-wrap">
+        <table class="variant-table">
+          <thead><tr><th></th>${variantData.variants.map((v) => `<th>${escapeHtml(v)}</th>`).join('')}</tr></thead>
+          <tbody>
+            ${variantData.variantRows.map(([k, parts]) => `
+              <tr><td class="variant-row-label">${escapeHtml(titleCaseKey(k))}</td>${parts.map((p) => `<td>${p ? escapeHtml(p) : '<span class="variant-cell-empty">–</span>'}</td>`).join('')}</tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>` : '';
+    const allThumbs = [d.thumb, ...(d.extra_thumbs || [])];
+    const thumbStrip = allThumbs.length > 1 ? `
+      <div class="modal-img-extra">
+        ${allThumbs.map((t, i) => `<img src="${escapeHtml(t)}" class="${i === 0 ? 'active' : ''}" data-thumb-idx="${i}" alt="page ${i + 1}">`).join('')}
+      </div>` : '';
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal" style="position:relative;">
+        <button class="modal-close" aria-label="Close">✕</button>
+        <div class="modal-img">
+          <div class="modal-img-main"><img src="${escapeHtml(d.thumb)}" alt="${escapeHtml(d.product_name)}"></div>
+          ${thumbStrip}
+        </div>
+        <div class="modal-body">
+          <div class="modal-eyebrow">${escapeHtml(d.company)}</div>
+          <div class="modal-title">${escapeHtml(d.product_name)}</div>
+          <div class="modal-badge">${escapeHtml(d.category)}</div>
+          ${d.subcategory ? `<div class="modal-desc"><em>${escapeHtml(d.subcategory)}</em></div>` : ''}
+          ${(d.needs_review && state.showReviewFlags) ? `<div class="review-banner">⚠ Needs review — ${escapeHtml(d.review_reason || 'flagged during extraction')}</div>` : ''}
+          ${d.description ? `<div class="modal-desc">${escapeHtml(d.description)}</div>` : ''}
+          ${variantTableHtml ? `<div><div class="section-label">Variants</div>${variantTableHtml}</div>` : ''}
+          ${specRows ? `<div><div class="section-label">${variantTableHtml ? 'Other Specifications' : 'Specifications'}</div><div class="spec-table" style="margin-top:8px;">${specRows}</div></div>` : ''}
+          ${d.original_text_zh ? `<details class="zh"><summary>Show original Chinese text</summary><div class="zh-text">${escapeHtml(d.original_text_zh)}</div></details>` : ''}
+          <div class="source-note">${d.page_note ? escapeHtml(d.page_note) + ' · ' : ''}Source: ${escapeHtml([d.source_image, ...(d.extra_source_images || [])].join(', '))}</div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    const close = () => overlay.remove();
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    overlay.querySelector('.modal-close').addEventListener('click', close);
+    const mainImg = overlay.querySelector('.modal-img-main img');
+    overlay.querySelectorAll('.modal-img-extra img').forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        mainImg.src = thumb.src;
+        overlay.querySelectorAll('.modal-img-extra img').forEach((t) => t.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+    });
+    const onKey = (e) => { if (e.key === 'Escape') { close(); document.removeEventListener('keydown', onKey); } };
+    document.addEventListener('keydown', onKey);
+  }
+
+  el('#category-list').addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip'); if (!chip) return;
+    const v = chip.dataset.value;
+    state.categories.has(v) ? state.categories.delete(v) : state.categories.add(v);
+    renderFacets(); renderGrid();
+  });
+  el('#company-list').addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip'); if (!chip) return;
+    const v = chip.dataset.value;
+    state.companies.has(v) ? state.companies.delete(v) : state.companies.add(v);
+    renderFacets(); renderGrid();
+  });
+  el('#param-list').addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip'); if (!chip) return;
+    const v = chip.dataset.value;
+    if (v in state.parameters) delete state.parameters[v];
+    else state.parameters[v] = { min: '', max: '' };
+    renderFacets(); renderGrid();
+  });
+  el('#param-search').addEventListener('input', (e) => { state.paramSearch = e.target.value; renderFacets(); });
+  el('#review-toggle').addEventListener('change', (e) => { state.showReviewFlags = e.target.checked; renderGrid(); });
+  el('#search').addEventListener('input', (e) => { state.search = e.target.value; renderFacets(); renderGrid(); });
+  el('#sort-select').addEventListener('change', (e) => {
+    state.sort = e.target.value;
+    state.listSort = { key: null, dir: 'asc' };
+    renderGrid();
+  });
+  el('#view-toggle').addEventListener('click', () => {
+    state.viewMode = state.viewMode === 'grid' ? 'list' : 'grid';
+    el('#view-toggle').classList.toggle('active', state.viewMode === 'list');
+    el('#view-toggle').textContent = state.viewMode === 'list' ? '▦ Grid view' : '☰ List view';
+    renderGrid();
+  });
+  document.querySelectorAll('.facet-link-btn[data-list]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const listId = btn.dataset.list;
+      state.expanded[listId] = !state.expanded[listId];
+      btn.textContent = state.expanded[listId] ? 'Collapse' : 'Expand';
+      el('#' + listId).classList.toggle('expanded', state.expanded[listId]);
+    });
+  });
+  document.querySelectorAll('.facet-link-btn[data-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      if (action === 'clear-category') state.categories.clear();
+      else if (action === 'clear-parameters') state.parameters = {};
+      else if (action === 'clear-company') state.companies.clear();
+      renderFacets(); renderGrid();
+    });
+  });
+  el('#clear-filters').addEventListener('click', () => {
+    state.categories.clear(); state.companies.clear(); state.parameters = {};
+    state.search = ''; state.paramSearch = '';
+    el('#search').value = ''; el('#param-search').value = '';
+    renderFacets(); renderGrid();
+  });
+
+  renderFacets();
+  renderGrid();
+})();
+</script>
