@@ -96,6 +96,7 @@
  "quiescent_current": "A",
  "thumb_fingertip_strength": "N",
  "force_resolution": "N",
+ "peak_speed_rpm": "rpm",
  "lead": "mm",
  "rated_peak_speed": "mm/s",
  "rated_thrust": "N",
@@ -106,6 +107,7 @@
  "bore_diameter": "mm",
  "outer_diameter": "mm",
  "rated_speed_linear": "mm/s",
+ "peak_speed_linear": "mm/s",
  "rated_average_input_speed": "rpm",
  "outer_dimensions": "mm",
  "motor_rated_speed": "rpm",
@@ -114,6 +116,7 @@
  "no_load_max_speed": "rpm",
  "resolution_motor_reducer_end": "bit",
  "dimensions_od_x_height": "mm",
+ "resolution_bit": "bit",
  "continuous_stall_torque": "°C",
  "no_load_peak_speed": "rpm",
  "resolution_motor_reducer": "bit",
@@ -133,6 +136,7 @@
  "fx_fy_capacity": "N",
  "fz_capacity": "N",
  "repeatable_accuracy": "%F.S.",
+ "resolution_pct_fs": "%F.S.",
  "capacity_fx_fy_fz": "N",
  "capacity_fx_fy": "N",
  "capacity_fz": "N",
@@ -211,6 +215,7 @@
  "diameter_x_axial_size": "mm",
  "hole_diameter": "mm",
  "rated_speed": "rpm",
+ "peak_speed": "rpm",
  "pcba_diameter": "mm",
  "force_range": "N",
  "nut_od": "mm",
@@ -251,5 +256,6 @@
  "capacity_mm": "mm",
  "od": "mm",
  "stroke_range": "mm",
- "measuring_range": "mm"
+ "measuring_range": "mm",
+ "measuring_force": "N"
 }

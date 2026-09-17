@@ -423,8 +423,26 @@
     capacity_mm: 'Capacity (mm)',
     rated_output_mv_v: 'Rated Output (mV/V)',
     rated_output_w: 'Rated Output (W)',
+    peak_speed_rpm: 'Peak Speed (RPM)',
+    peak_speed_linear: 'Peak Speed (mm/s)',
+    resolution_bit: 'Resolution (bit)',
+    resolution_pct_fs: 'Resolution (%F.S)',
+    resolution_deg: 'Resolution (deg)',
+    resolution_n: 'Resolution (N)',
+    measuring_force: 'Measuring Force (N)',
+    peak_phase_current: 'Peak Phase Current (A)',
   };
-  const titleCaseKey = (k) => PARAM_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  // auto-detected units (e.g. weight -> "g") for every parameter with a
+  // single dominant unit across the dataset -- see scripts/param_units.py.
+  // PARAM_LABELS above wins when both exist since those involved real unit
+  // CONVERSION work, not just labeling.
+  let AUTO_PARAM_UNITS = {};
+  const plainTitleCase = (k) => k.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const titleCaseKey = (k) => {
+    if (PARAM_LABELS[k]) return PARAM_LABELS[k];
+    if (AUTO_PARAM_UNITS[k]) return `${plainTitleCase(k)} (${AUTO_PARAM_UNITS[k]})`;
+    return plainTitleCase(k);
+  };
   const parseNumeric = (v) => { const m = String(v).match(/-?\d+\.?\d*/); return m ? parseFloat(m[0]) : null; };
 
   try {
@@ -433,6 +451,12 @@
   } catch (e) {
     el('#grid').innerHTML = '<div class="empty-state">Could not load component data.</div>';
     return;
+  }
+  try {
+    const unitsRes = await fetch('param_units.json', { cache: 'no-store' });
+    AUTO_PARAM_UNITS = await unitsRes.json();
+  } catch (e) {
+    // non-fatal -- dashboard still works, just without auto unit labels
   }
 
   const catCounts = {}, companyCounts = {}, paramCounts = {};
