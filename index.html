@@ -561,15 +561,22 @@
   function matches(d) {
     if (state.categories.size && !state.categories.has(d.category)) return false;
     if (state.companies.size && !state.companies.has(d.company)) return false;
+    // selecting a parameter adds it as a visible column (list view) / makes
+    // it available to range-filter -- it never excludes a row on its own.
+    // An item simply not having that spec isn't a "no match", it's an
+    // "unknown/not applicable", so it stays visible with a blank cell.
+    // Only an actual min/max range set on a parameter excludes rows, and
+    // only rows that HAVE a value outside that range -- rows missing the
+    // value entirely aren't excluded by a range either, since there's
+    // nothing to compare.
     for (const [key, range] of Object.entries(state.parameters)) {
+      if (range.min === '' && range.max === '') continue;
       const specs = d.specs || {};
-      if (!(key in specs)) return false;
-      if (range.min !== '' || range.max !== '') {
-        const val = parseNumeric(specs[key]);
-        if (val === null) return false;
-        if (range.min !== '' && val < parseFloat(range.min)) return false;
-        if (range.max !== '' && val > parseFloat(range.max)) return false;
-      }
+      if (!(key in specs)) continue;
+      const val = parseNumeric(specs[key]);
+      if (val === null) continue;
+      if (range.min !== '' && val < parseFloat(range.min)) return false;
+      if (range.max !== '' && val > parseFloat(range.max)) return false;
     }
     if (state.search) {
       const s = state.search.toLowerCase();
