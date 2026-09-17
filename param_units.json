@@ -83,6 +83,9 @@
  "bore_diameter_d": "mm",
  "outer_diameter_D": "mm",
  "noise": "dB",
+ "average_efficiency": "%",
+ "transmission_efficiency": "%",
+ "od": "mm",
  "density": "g",
  "water_absorption": "%",
  "heat_deflection_temp_0_45mpa": "°C",
@@ -254,7 +257,6 @@
  "size_E": "mm",
  "capacity_nm": "N·m",
  "capacity_mm": "mm",
- "od": "mm",
  "stroke_range": "mm",
  "measuring_range": "mm",
  "measuring_force": "N"
