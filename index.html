@@ -243,7 +243,7 @@
   }
   .modal-img { background: var(--surface-2); }
   .modal-img { display: flex; flex-direction: column; }
-  .modal-img img { width: 100%; height: 100%; object-fit: contain; display: block; max-height: 560px; }
+  .modal-img img { width: 100%; height: 100%; object-fit: contain; display: block; max-height: calc(100vh - 64px); }
   .modal-img-main { flex: 1; min-height: 0; }
   .modal-img-extra { display: flex; gap: 6px; padding: 6px; background: var(--surface); overflow-x: auto; }
   .modal-img-extra img {
@@ -251,7 +251,7 @@
     border: 2px solid transparent; flex: none;
   }
   .modal-img-extra img.active { border-color: var(--accent); }
-  .modal-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; max-height: 560px; }
+  .modal-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; max-height: calc(100vh - 64px); }
   .modal-close {
     position: absolute; top: 12px; right: 12px; background: var(--surface); border: 1px solid var(--rule);
     border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 16px; color: var(--ink);
