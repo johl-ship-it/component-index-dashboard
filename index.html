@@ -952,8 +952,11 @@
     btn.addEventListener('click', () => {
       const action = btn.dataset.action;
       if (action === 'clear-category') state.categories.clear();
-      else if (action === 'clear-parameters') state.parameters = {};
-      else if (action === 'clear-company') state.companies.clear();
+      else if (action === 'clear-parameters') {
+        state.parameters = {};
+        state.paramSearch = '';
+        el('#param-search').value = '';
+      } else if (action === 'clear-company') state.companies.clear();
       renderFacets(); renderGrid();
     });
   });
